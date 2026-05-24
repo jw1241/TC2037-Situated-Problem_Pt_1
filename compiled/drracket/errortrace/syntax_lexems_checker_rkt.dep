@@ -1,0 +1,1 @@
+("9.1" tarm64osx ("973ee632baac8beef8303cbbadcf9380defcc8b2" . "4826c0cc0cdf9fd656f2bee32413a4d1f8801bbc") #"/Users/jianhanwang/TC2037-Situated-Problem_Pt_1/lexer.rkt" (collects #"drracket" #"private" #"drracket-errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))
