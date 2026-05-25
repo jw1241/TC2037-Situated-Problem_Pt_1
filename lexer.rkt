@@ -20,12 +20,12 @@
   lines)
 
 (define conditions '("if" "elif" "else"))
-(define variable_assignment '("="))
+(define assignment_operators '("=" "-=" "+=" "*=" "/=" "%="))
 (define keywords '("def" "in" "return" "import" "True" "False"))
 (define logical_operators '("and" "or" "not"))
 (define comparison_operators '("==" "!=" ">" "<" ">=" "<="))
 (define loops '("while" "for"))
-(define operations '("-=" "+=" "*=" "/=" "**" "*" "/" "+" "-" "math.sqrt")) ;The '=' sign should probably be somewhere else
+(define operations '("**" "*" "/" "%" "+" "-" "math.sqrt")) ;The '=' sign should probably be somewhere else
 (define delimiters '("(" ")" "," ":"))
 (define builtins '("range" "len"))
 
@@ -50,8 +50,8 @@
     [(member word keywords)
      (token 'KEYWORD word line-num indent)]
     
-    [(member word variable_assignment)
-     (token 'VARIABLE_ASSIGNMENT word line-num indent)]
+    [(member word assignment_operators)
+     (token 'ASSIGNEMENT_OPERATOR word line-num indent)]
 
     [(member word operations)
      (token 'OPERATION word line-num indent)]
@@ -145,8 +145,10 @@
 
 ;TESTING
 ;--------------------------
-;(for-each displayln list)
+(define good_file "Sample_Code.py")
+;(map split_line (read-file-lines good_file))
 
+(all_tokens good_file)
 #|
 (car list)
 (split_line (car list))
