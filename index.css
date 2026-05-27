@@ -1,0 +1,64 @@
+text {
+    font-family: "Monokai", monospace;
+    font-weight: bold;
+}
+
+body {
+    background-color: #272822;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+.comment { 
+    color: gray; 
+    font-style: italic; 
+}
+
+.number { 
+    color: #8f00ff; 
+}
+
+.keyword {
+    color: #f92672; /* Vibrant Monokai pink */
+}
+
+.condition {
+    color: #ff9800; /* Distinct orange for control flow branches */
+}
+
+.loop {
+    color: #ae81ff; /* Purple to highlight iteration structures */
+}
+
+.string {
+    color: #e6db74; /* Soft yellow for literal values */
+}
+
+.identifier { 
+    color: #ffffff; 
+}
+
+.delimiter { 
+    color: #a6e22e; /* Light green to clearly mark structural bounds */
+}
+
+.assignement_operator {
+    color: #f8f8f2; 
+}
+
+.operation {
+    color: #66d9ef; /* Cyan/blue for math and algebraic steps */
+}
+
+.logical_operator {
+    color: #fd971f; 
+}
+
+.comparison_operator {
+    color: #66d9ef; 
+}
+
+.unknown {
+    color: #ff0000; 
+    text-decoration: underline; /* Visually flags parser errors */
+}
