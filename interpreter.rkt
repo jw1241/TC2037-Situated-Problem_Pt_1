@@ -36,9 +36,32 @@
   )
 ;Get the value of a defined variable
 (define (get_var_value token variables)
-  (hash-ref variables (token-value token))
+  (hash-ref variables (token-value token)
+            (format "[ERROR] No value for key: ~a" (token-value token)))
   )
 
+(define (operate_expr operator value1 value2 variables)
+  (cond
+    [(equal? operator "+")
+     (+ value1 value2)
+     ]
+    [(equal? operator "-")
+     (- value1 value2)
+     ]
+    [(equal? operator "*")
+     (* value1 value2)
+     ]
+    [(equal? operator "/")
+     (/ value1 value2)
+     ]
+    [(equal? operator "**")
+     (expt value1 value2)
+     ]
+    [else
+     value1
+     ]
+    )
+  )
 
 ;Assuming the syntax is correct
 (define (evaluate_expr line variables)
@@ -52,56 +75,24 @@
        (str_to_int(car line))
        ]
       [else
-       (define operator (token-value (cadr line)))
-       (cond
-         [(equal? operator "+")
-          (+ (str_to_int(car line)) (evaluate_expr (cddr line) variables))
-          ]
-         [(equal? operator "-")
-          (- (str_to_int(car line)) (evaluate_expr (cddr line) variables))
-          ]
-         [(equal? operator "*")
-          (* (str_to_int(car line)) (evaluate_expr (cddr line) variables))
-          ]
-         [(equal? operator "/")
-          (/ (str_to_int(car line)) (evaluate_expr (cddr line) variables))
-          ]
-         [(equal? operator "**")
-          (expt (str_to_int (car line)) (evaluate_expr (cddr line) variables))
-          ]
-         )
+       ;(define operator (token-value (cadr line)))
+       (operate_expr (token-value (cadr line))
+                     (str_to_int (car line))
+                     (evaluate_expr (cddr line) variables)
+                     variables)
        ]
       )]
 
   [(token-type? (car line) 'IDENTIFIER)
     (cond
-      [(or (null? (cdr line)) (token-type-and-value? (cadr line) 'DElIMITER ")"))
+      [(or (null? (cdr line)) (token-type-and-value? (cadr line) 'DELIMITER ")"))
        (get_var_value (car line) variables)
        ]
       [else
-       (define operator (token-value (cadr line)))
-       (cond
-         [(equal? operator "+")
-          (+ (get_var_value(car line)variables)
-             (evaluate_expr (cddr line) variables))
-          ]
-         [(equal? operator "-")
-          (- (get_var_value(car line)variables)
-             (evaluate_expr (cddr line) variables))
-          ]
-         [(equal? operator "*")
-          (* (get_var_value(car line)variables)
-             (evaluate_expr (cddr line) variables))
-          ]
-         [(equal? operator "/")
-          (/ (get_var_value(car line)variables)
-             (evaluate_expr (cddr line) variables))
-          ]
-         [(equal? operator "**")
-          (expt (get_var_value (car line)variables)
-                (evaluate_expr (cddr line) variables))
-          ]
-         )
+       (operate_expr (token-value (cadr line))
+                     (get_var_value (car line) variables)
+                     (evaluate_expr (cddr line) variables)
+                     variables)
        ]
       )]
 
@@ -156,9 +147,11 @@
   variables
   )
 
+;Checks if the line is the call to the print function and displays the result if yes
 (define (check_print line variables)
   (when (token-type-and-value? (car line) 'BUILTIN "print")
-    (displayln (get_var_value (caddr line) variables))
+    (display (format "[Line ~a] print " (token-line (car line))))
+    (displayln (evaluate_expr (cddr line) variables))
     )
   )
 
