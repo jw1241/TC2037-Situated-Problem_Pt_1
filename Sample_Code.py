@@ -21,7 +21,7 @@ print(e)
 print(f)
 print(g)
 print(h)
-print(len(l))
+print(l)
 print(k)
 
 # For loop
