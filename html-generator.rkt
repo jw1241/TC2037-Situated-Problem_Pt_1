@@ -43,7 +43,7 @@
       (displayln "<title>Syntax Highlighted Output</title>")
       (displayln "<style>")
 
-      (displayln "text { font-family: 'Monokai', monospace; font-weight: bold; white-space: pre; }")
+      (displayln "text { font-family: 'Monokai', monospace; font-weight: bold;}")
       (displayln "body { background-color: #272822; padding: 20px; line-height: 1.5; }")
       (displayln ".comment { color: gray; font-style: italic; }")
       (displayln ".number { color: #8f00ff; }")
