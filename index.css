@@ -58,11 +58,7 @@ body {
     color: #66d9ef; 
 }
 
-.builtin {
-    color:darkolivegreen;
-}
-
 .unknown {
     color: #ff0000; 
-    text-decoration: underline;
+    text-decoration: underline; /* Visually flags parser errors */
 }

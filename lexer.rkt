@@ -15,19 +15,19 @@
 ; Read the txt file
 (define (read-file-lines filename)
   (define in (open-input-file filename))
-  (define lines (sequence->list (in-lines in)))
+  (define lines (sequence->list (in-lines in))
+    )
   (close-input-port in)
   lines)
 
-(define conditions '("if" "elif" "else"))
 (define assignment_operators '("=" "-=" "+=" "*=" "/=" "%="))
-(define keywords '("def" "in" "return" "import" "True" "False"))
-(define logical_operators '("and" "or" "not"))
+(define keywords '("def" "in" "return" "import" "True" "False" "math"))
 (define comparison_operators '("==" "!=" ">" "<" ">=" "<="))
 (define loops '("while" "for"))
-(define operations '("**" "*" "/" "%" "+" "-" "math.sqrt")) ;The '=' sign should probably be somewhere else
-(define delimiters '("(" ")" "," ":"))
-(define builtins '("range" "len"))
+(define operations '("**" "*" "/" "%" "+" "-")) ;The '=' sign should probably be somewhere else
+(define delimiters '("(" ")" "," ":" "[" "]" "."))
+(define builtins '("range" "len" "print"))
+
 
 ; Create token structure and display actual values
 (struct token (type value line indent) #:transparent)
@@ -35,7 +35,9 @@
 (define (indent-level line)
   (- (string-length line)
      (string-length
-      (string-trim line #:left? #t))))
+      (string-trim line #:left? #t))
+     )
+  )
 
 ; Creates a list of all words within a line without whitespaces
 (define (split_line line)
@@ -59,35 +61,40 @@
     [(member word delimiters)
      (token 'DELIMITER word line-num indent)]
 
-    [(member word conditions)
-     (token 'CONDITION word line-num indent)]
-
-    [(member word logical_operators)
-     (token 'LOGICAL_OPERATOR word line-num indent)]
-
     [(member word comparison_operators)
      (token 'COMPARISON_OPERATOR word line-num indent)]
 
     [(member word loops)
      (token 'LOOP word line-num indent)]
 
+    [(member word builtins)
+     (token 'BUILTINS word line-num indent)]
+
+
     [(regexp-match #px"^-?[0-9]+$" word) ; Handles negative & positive numbers
      (token 'NUMBER word line-num indent)]
 
     [(regexp-match #px"^\"[^\"]*\"$" word)
-     (token 'STRING word line-num indent)]
+ (token 'STRING
+        (substring word 1 (- (string-length word) 1))
+        line-num
+        indent)]
 
     [(regexp-match #px"^[A-Za-z_][A-Za-z0-9_]*$" word) ; Identifiers
      (token 'IDENTIFIER word line-num indent)]
 
     [else
-     (token 'UNKNOWN word line-num indent)]))
+     (token 'UNKNOWN word line-num indent)]
+    )
+  )
 
 
 ; Tokenize the entire file
 (define (tokenize_line line line-num)
   (define indent
   (indent-level line))
+
+  
   
   (define comment-match
     (regexp-match-positions #px"#" line))
@@ -126,29 +133,29 @@
         (classify a line-num indent))
       (split_line line))
     ]
-    #|[else
-     (map classify (split_line line)) ]
-  |#
   )
 )
 
+
+;Generate all the tokens
 (define (all_tokens filename)
   (define lines (read-file-lines filename))
-  
-  (for/list ([line lines]
-             [line-num (in-naturals 1)])
-    (tokenize_line line line-num)
-  )
-)
-  ;(map tokenize_line list))
 
+  (filter
+   pair?
+   (for/list ([line lines]
+              [line-num (in-naturals 1)]
+              )
+     (tokenize_line line line-num))
+   )
+  )
 
 ;TESTING
 ;--------------------------
-(define good_file "Sample_Code.py")
+;(define good_file "Sample_Code.py")
 ;(map split_line (read-file-lines good_file))
 
-(all_tokens good_file)
+;(all_tokens good_file)
 #|
 (car list)
 (split_line (car list))

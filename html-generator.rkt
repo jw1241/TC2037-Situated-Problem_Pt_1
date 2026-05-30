@@ -1,6 +1,8 @@
 #lang racket
 (require "lexer.rkt")
 
+(provide run-syntax-highlighter)
+
 (define (escape-html-chars str)
   (string-replace 
    (string-replace 
@@ -8,14 +10,20 @@
     "<" "&lt;")
    ">" "&gt;"))
 
+
 (define (token->html tok)
-  (define type-str (string-downcase (symbol->string (token-type tok))))
-  (define safe-value (escape-html-chars (token-value tok)))
+  (define type-str (string-downcase (symbol->string (token-type tok))
+                                    )
+    )
+  (define safe-value (escape-html-chars (token-value tok))
+    )
   (cond
     [(eq? (token-type tok) 'WHITESPACE) 
      (token-value tok)] ;
     [else 
-     (format "<text class=\"~a\">~a</text>" type-str safe-value)]))
+     (format "<text class=\"~a\">~a</text>" type-str safe-value)]
+    )
+  )
 
 (define (line->html line-tokens)
   (string-append (string-join (map token->html line-tokens) "") "<br>\n"))
@@ -64,5 +72,3 @@
   (define parsed-tokens (all_tokens python-input-file))
   (generate-html-document parsed-tokens html-output-file)
   (displayln "Successfully highlighted code!"))
-
-(run-syntax-highlighter "Sample_Code.py" "Highlighter_Output.html")

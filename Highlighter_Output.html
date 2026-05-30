@@ -23,60 +23,37 @@ body { background-color: #272822; padding: 20px; line-height: 1.5; }
 </style>
 </head>
 <body>
-<text class="comment">#import math</text><br>
-<br>
+<text class="keyword">import</text><text class="keyword">math</text><br>
 <text class="identifier">a</text><text class="assignement_operator">=</text><text class="number">5</text><text class="comment"># Variable assignment</text><br>
 <text class="identifier">b1</text><text class="assignement_operator">=</text><text class="number">4</text><text class="operation">**</text><text class="number">2</text><text class="comment"># Exponent</text><br>
 <text class="identifier">c</text><text class="assignement_operator">=</text><text class="number">5</text><text class="operation">*</text><text class="number">10</text><text class="comment"># Multiplication</text><br>
 <text class="identifier">d</text><text class="assignement_operator">=</text><text class="number">12</text><text class="operation">/</text><text class="number">3</text><text class="comment"># Division</text><br>
 <text class="identifier">e</text><text class="assignement_operator">=</text><text class="number">3</text><text class="operation">+</text><text class="number">4</text><text class="comment"># Addition</text><br>
-<text class="identifier">e2</text><text class="assignement_operator">=</text><text class="identifier">a</text><text class="operation">+</text><text class="identifier">c</text><text class="operation">+</text><text class="number">45</text><text class="comment"># = 100</text><br>
-<text class="identifier">e3</text><text class="assignement_operator">=</text><text class="delimiter">(</text><text class="identifier">e</text><text class="operation">+</text><text class="number">3</text><text class="delimiter">)</text><br>
-<text class="identifier">a1</text><text class="assignement_operator">=</text><text class="delimiter">(</text><text class="number">2</text><text class="operation">*</text><text class="delimiter">(</text><text class="number">5</text><text class="operation">+</text><text class="number">2</text><text class="delimiter">)</text><text class="delimiter">)</text><br>
-<text class="identifier">f</text><text class="assignement_operator">=</text><text class="number">7</text><text class="operation">-</text><text class="number">2</text><text class="comment"># Subtraction</text><br>
-<text class="comment">#g = 6 / 2 * (1 + 2) ** 2 # PEMDAS Example</text><br>
-<text class="identifier">h</text><text class="assignement_operator">=</text><text class="string">"This is a string"</text><text class="comment">#String</text><br>
-<text class="comment">#l = [1,2,3,4] # List</text><br>
-<br>
-<br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">b1</text><text class="delimiter">)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">c</text><text class="delimiter">)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">d</text><text class="delimiter">)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">e</text><text class="delimiter">)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">f</text><text class="delimiter">)</text><br>
-<text class="comment">#print(g)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">h</text><text class="delimiter">)</text><br>
-<text class="comment">#print(len(l))</text><br>
-<br>
+<text class="identifier">e2</text><text class="assignement_operator">=</text><text class="identifier">a</text><text class="operation">+</text><text class="identifier">c</text><text class="operation">+</text><text class="number">45</text><text class="comment"># 100</text><br>
+<text class="identifier">e3</text><text class="assignement_operator">=</text><text class="delimiter">(</text><text class="identifier">e</text><text class="operation">+</text><text class="number">3</text><text class="delimiter">)</text><text class="comment"># 10</text><br>
+<text class="identifier">a1</text><text class="assignement_operator">=</text><text class="delimiter">(</text><text class="number">2</text><text class="operation">*</text><text class="delimiter">(</text><text class="number">5</text><text class="operation">+</text><text class="number">2</text><text class="delimiter">)</text><text class="delimiter">)</text><text class="comment"># 14</text><br>
+<text class="identifier">f</text><text class="assignement_operator">=</text><text class="number">7</text><text class="operation">-</text><text class="number">2</text><text class="comment"># 5</text><br>
+<text class="identifier">g</text><text class="assignement_operator">=</text><text class="number">6</text><text class="operation">/</text><text class="number">2</text><text class="operation">*</text><text class="delimiter">(</text><text class="number">1</text><text class="operation">+</text><text class="number">2</text><text class="delimiter">)</text><text class="operation">**</text><text class="number">2</text><text class="comment"># PEMDAS Example = 27</text><br>
+<text class="identifier">h</text><text class="assignement_operator">=</text><text class="string">This is a string</text><text class="comment"># String</text><br>
+<text class="identifier">l</text><text class="assignement_operator">=</text><text class="delimiter">[</text><text class="number">1</text><text class="delimiter">,</text><text class="number">2</text><text class="delimiter">,</text><text class="number">3</text><text class="delimiter">,</text><text class="number">4</text><text class="delimiter">]</text><text class="comment"># List</text><br>
+<text class="identifier">k</text><text class="assignement_operator">=</text><text class="keyword">math</text><text class="delimiter">.</text><text class="identifier">sqrt</text><text class="delimiter">(</text><text class="number">4</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">b1</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">c</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">d</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">e</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">f</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">g</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">h</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="builtins">len</text><text class="delimiter">(</text><text class="identifier">l</text><text class="delimiter">)</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">k</text><text class="delimiter">)</text><br>
 <text class="comment"># For loop</text><br>
-<text class="loop">for</text><text class="identifier">i</text><text class="keyword">in</text><text class="identifier">range</text><text class="delimiter">(</text><text class="number">4</text><text class="delimiter">)</text><text class="delimiter">:</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">i</text><text class="delimiter">)</text><br>
-<br>
+<text class="loop">for</text><text class="identifier">i</text><text class="keyword">in</text><text class="builtins">range</text><text class="delimiter">(</text><text class="number">4</text><text class="delimiter">)</text><text class="delimiter">:</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">i</text><text class="delimiter">)</text><br>
 <text class="comment"># While loop</text><br>
 <text class="identifier">j</text><text class="assignement_operator">=</text><text class="number">4</text><br>
 <text class="loop">while</text><text class="identifier">j</text><text class="comparison_operator">&gt;</text><text class="number">0</text><text class="delimiter">:</text><br>
 <text class="identifier">j</text><text class="assignement_operator">-=</text><text class="number">1</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">j</text><text class="delimiter">)</text><br>
-<br>
-<text class="comment"># Return false if number is 0 or negative, true if the number is not 0 and greater than 0</text><br>
-<text class="keyword">def</text><text class="identifier">try_out</text><text class="delimiter">(</text><text class="identifier">number</text><text class="delimiter">)</text><text class="delimiter">:</text><br>
-<text class="condition">if</text><text class="identifier">number</text><text class="comparison_operator">==</text><text class="number">0</text><text class="logical_operator">or</text><text class="identifier">number</text><text class="comparison_operator">&lt;</text><text class="number">0</text><text class="delimiter">:</text><br>
-<text class="keyword">return</text><text class="keyword">False</text><br>
-<text class="condition">elif</text><text class="identifier">number</text><text class="comparison_operator">!=</text><text class="number">0</text><text class="logical_operator">and</text><text class="identifier">number</text><text class="comparison_operator">&gt;</text><text class="number">0</text><text class="delimiter">:</text><br>
-<text class="keyword">return</text><text class="keyword">True</text><br>
-<br>
-<text class="comment">#Return true if the number is between 3 and 2, false otherwise</text><br>
-<text class="keyword">def</text><text class="identifier">try_out1</text><text class="delimiter">(</text><text class="identifier">number</text><text class="delimiter">)</text><text class="delimiter">:</text><br>
-<text class="condition">if</text><text class="identifier">number</text><text class="comparison_operator">&lt;=</text><text class="number">3</text><text class="logical_operator">and</text><text class="identifier">number</text><text class="comparison_operator">&gt;=</text><text class="number">2</text><text class="delimiter">:</text><br>
-<text class="keyword">return</text><text class="keyword">True</text><br>
-<text class="condition">else</text><text class="delimiter">:</text><br>
-<text class="keyword">return</text><text class="keyword">False</text><br>
-<br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">try_out</text><text class="delimiter">(</text><text class="number">0</text><text class="delimiter">)</text><text class="delimiter">)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">try_out</text><text class="delimiter">(</text><text class="number">-1</text><text class="delimiter">)</text><text class="delimiter">)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">try_out</text><text class="delimiter">(</text><text class="number">1</text><text class="delimiter">)</text><text class="delimiter">)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">try_out1</text><text class="delimiter">(</text><text class="number">2</text><text class="delimiter">)</text><text class="delimiter">)</text><br>
-<text class="identifier">print</text><text class="delimiter">(</text><text class="identifier">try_out1</text><text class="delimiter">(</text><text class="number">4</text><text class="delimiter">)</text><text class="delimiter">)</text><br>
+<text class="builtins">print</text><text class="delimiter">(</text><text class="identifier">j</text><text class="delimiter">)</text><br>
 
 </body>
 </html>

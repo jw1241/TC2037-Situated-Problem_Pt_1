@@ -20,10 +20,12 @@
                (eq? (token-type (car line)) 'IDENTIFIER))
 
       (define first-word
-        (token-value (car line)))
+        (token-value (car line))
+        )
 
       (define line-num
-        (token-line (car line)))
+        (token-line (car line))
+        )
 
       (when (member first-word '("whiel" "fro" "els"))
 
@@ -35,10 +37,15 @@
                  "Possible misspelled keyword '~a' on line ~a"
                  first-word
                  line-num))
-               errors)))))
+               errors))
+        )
+      )
+    )
 
-  errors)
+  errors
+  )
 
+;Check if colons are missing
 (define (check-colon line line-num errors)
 
   (define trimmed
@@ -57,17 +64,22 @@
                    (format
                     "Syntax Error [Line ~a]: Missing ':'"
                     line-num))
-             errors))))
+             errors))
+      )
+    )
 
   errors)
 
+;Check if parentheses are balanced one open and one close
 (define (balanced-parens? line)
 
   (= (count (lambda (c) (char=? c #\())
              (string->list line))
 
      (count (lambda (c) (char=? c #\)))
-             (string->list line))))
+             (string->list line))
+     )
+  )
 
 (define (check-parens line line-num errors)
 
@@ -82,13 +94,16 @@
 
   errors)
 
+
+; Check for proper indentation
 (define (check-indentation lines errors)
 
   (define expected-indent 0)
   (define previous-ended-colon #f)
 
   (for ([line lines]
-        [line-num (in-naturals 1)])
+        [line-num (in-naturals 1)]
+        )
 
     (unless (string-blank? line)
 
@@ -107,7 +122,9 @@
                      (format
                       "Indentation Error [Line ~a]"
                       line-num))
-               errors)))
+               errors)
+              )
+        )
 
       ; Expected indentation after colon
       (when previous-ended-colon
@@ -121,10 +138,15 @@
                   (format
                    "Indentation Error [Line ~a]: Expected indented block"
                    line-num))
-                 errors))))))
+                 errors))
+          )
+        )
+      )
+    )
+  errors
+  )
 
-  errors)
-
+;Check if print was spelled correctly
 (define (check-print line line-num errors)
 
   (when (regexp-match #px"print" line)
@@ -139,11 +161,14 @@
               (format
                "Syntax Error [Line ~a]: Invalid print syntax"
                line-num))
-             errors))))
+             errors))
+      )
+    )
 
-  errors)
+  errors
+  )
 
-
+;Return any unknown tokens
 (define (check-unknowns token-lines errors)
 
   (for ([line token-lines])
@@ -163,10 +188,14 @@
                  "Unknown token '~a' on line ~a"
                  (token-value tk)
                  line-num))
-               errors)))))
+               errors))
+        )
+      )
+    )
 
   errors)
 
+;Check the file for errors
 (define (check-syntax filename)
 
   (define lines
@@ -178,7 +207,8 @@
   (define errors '())
 
   (for ([line lines]
-        [line-num (in-naturals 1)])
+        [line-num (in-naturals 1)]
+        )
 
     (unless (string-blank? line)
 
@@ -189,7 +219,9 @@
             (check-parens line line-num errors))
 
       (set! errors
-            (check-print line line-num errors))))
+            (check-print line line-num errors))
+      )
+    )
 
   (set! errors
       (check-indentation lines errors))
@@ -209,10 +241,13 @@
     (displayln "No syntax errors found.")
 
     (let ([sorted-errors
-       (sort errors < #:key car)])
+       (sort errors < #:key car)]
+          )
 
   (for-each
    (lambda (err)
-     (displayln (cdr err)))
-   sorted-errors)))
+     (displayln (cdr err))
+     )
+   sorted-errors))
+    )
 )
