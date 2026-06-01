@@ -1,0 +1,26 @@
+body {
+    background: #272822;
+    color: white;
+    font-family: monospace;
+}
+
+.keyword {
+    color: #f92672;
+}
+
+.number {
+    color: #ae81ff;
+}
+
+.operator {
+    color: #66d9ef;
+}
+
+.comment {
+    color: gray;
+    font-style: italic;
+}
+
+.identifier {
+    color: white;
+}
