@@ -1,22 +1,63 @@
 (ns main
   (:require [clojure.string :as str]
+            [clojure.java.io :as io]
             [lexer :refer [tokenize-file]]
             [syntax-checker :refer [syntax-check]]
-            [parser :refer [parse-program]]
-            ))
+            [parser :refer [parse-program]]))
 
-(defn read-lines [filename]
-  (str/split-lines (slurp filename)))
+(defn process-file [file-path]
+  (tokenize-file file-path)
+  (syntax-check file-path)
+  (parse-program file-path))
 
-(defn -main []
-    ;(println (read-lines "Sample_Code.py")))
-    ;(println (tokenize-file "Sample_Code.py")))
-    (println (parse-program "Sample_Code.py")))
+(defn is-python-file? [file-object]
+  (str/ends-with? (.getName file-object) ".py"))
 
-  ;(doseq [err (syntax-check "Sample_Bad.py")]
-  ;(if-let [line (:line err)]
-    ;(println (str "Line " line ": " (:message err)))
-    ;(println (:message err)))))
+(defn process-directory-sequential [file-paths]
+  (mapv process-file file-paths))
 
+(defn process-directory-parallel-futures [file-paths]
+  (let [active-tasks (mapv (fn [path] (future (process-file path))) file-paths)]
+    (mapv deref active-tasks)))
+
+(defn run-benchmarks [folder-path]
+  (let [directory-object (io/file folder-path)]
+
+    (when (.isDirectory directory-object)
+      (let [all-files-and-folders (file-seq directory-object)
+            python-files (filter is-python-file? all-files-and-folders)
+            file-paths (map (fn [f] (.getPath f)) python-files)]
+
+        (if (empty? file-paths)
+          (println "No Python files found in this directory.")
+
+          
+          (let [start-seq (System/nanoTime)
+                _ (process-directory-sequential file-paths)
+                end-seq (System/nanoTime)
+                seq-seconds (/ (- end-seq start-seq) 1e9)
+
+                start-par (System/nanoTime)
+                _ (process-directory-parallel-futures file-paths)
+                end-par (System/nanoTime)
+                par-seconds (/ (- end-par start-par) 1e9)
+                speedup-factor (/ seq-seconds par-seconds)]
+            
+            (println (str "Sequential Execution Time: " seq-seconds " seconds"))
+            (println (str "Parallel Future Time:      " par-seconds " seconds"))
+            (println (str "Calculated Speedup:        " speedup-factor "x faster")) 
+          )
+        )
+      )
+    )
+  )
+)
+
+(defn -main [& arguments]
+  (if (empty? arguments)
+    (println "not good")
+
+    (let [target-folder (first arguments)]
+      (run-benchmarks target-folder))))
 
 (-main)
