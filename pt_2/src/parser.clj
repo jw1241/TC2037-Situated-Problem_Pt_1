@@ -85,13 +85,11 @@
   (loop [i start-index
          body []]
 
-    (println "COLLECT-BLOCK i =" i)
 
     (if (or (>= i (count lines))
             (<= (indent-of (nth lines i)) parent-indent))
 
       (do
-        (println "RETURNING" i)
         [body i])
 
       (recur
@@ -424,7 +422,6 @@
 
   (let [lines
         (vec (lex/tokenize-file filename))]
-        (println "TOTAL LINES =" (count lines))
 
     (loop [i 0
            ast []]
@@ -435,9 +432,6 @@
 
         (let [line   (nth lines i)
               tokens (vec (remove-comments line))]
-
-          (println "INDEX:" i)
-          (println "TOKENS:" tokens)
 
           (cond
 
@@ -497,9 +491,6 @@
 
 (let [condition (parse-if-header tokens)]
 
-  (println "ENTERING IF")
-  (println "CONDITION =" condition)
-
   (let [[then-lines next-index]
         (collect-block lines (inc i) (indent-of line))
 
@@ -510,8 +501,6 @@
         (collect-if-chain lines next-index (indent-of line))
 
         {:keys [elifs else-body next-index]} chain]
-
-    (println "RECURRING TO INDEX =" next-index)
 
     (recur next-index
            (conj ast
@@ -527,4 +516,4 @@
 
 
 
-(parse-program "Sample_Code.py")
+;(parse-program "Sample_Code.py")

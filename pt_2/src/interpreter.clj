@@ -202,26 +202,44 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn exec-if [node env]
-
   (if
-
    (eval-expression
     (:condition node)
     env)
 
+    ;Then block
     (reduce
      execute-node
      env
      (:then node))
 
-    env))
+    (if 
+      ;Checking if elif exist and if yes checks the condition
+      (and
+        (not (empty? (:elifs node)))
+        (eval-expression
+        (:condition (first(:elifs node)))
+        env))
+
+      ;Elif block
+      (reduce
+      execute-node
+      env
+      (:body (first(:elifs node))))
+
+      ;Else block
+      (reduce
+      execute-node
+      env
+      (:else node)))
+    )
+    )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; NODE EXECUTION
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn execute-node [env node]
-
   (case (:type node)
 
     :assignment
@@ -269,4 +287,4 @@
 ;; ENTRY POINT
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(run-program "Sample_Code.py")
+;(run-program "Sample_Code.py")
