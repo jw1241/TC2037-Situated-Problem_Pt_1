@@ -33,12 +33,3 @@ j = 4
 while j > 0:
     j -= 1
     print(j)
-
-a = 4
-if a == 4:
-    print(a)
-elif a == 3:
-    print(a)
-else:
-    print(1)
-
