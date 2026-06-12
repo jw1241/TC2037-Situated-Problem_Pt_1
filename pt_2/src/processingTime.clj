@@ -3,12 +3,15 @@
             [clojure.java.io :as io]
             [lexer :refer [tokenize-file]]
             [syntax-checker :refer [syntax-check]]
-            [parser :refer [parse-program]]))
+            [parser :refer [parse-program]]
+            [html-generator :as html-generator]))
 
+;; Merged execution pipeline function
 (defn process-file [file-path]
-  (tokenize-file file-path)
-  (syntax-check file-path)
-  (parse-program file-path))
+  (let [output-path (str (str/replace file-path #"\.py$" "") ".html")]
+    (syntax-check file-path)
+    (html-generator/run file-path output-path) ;; Generates HTML and clears linter warnings
+    (parse-program file-path)))
 
 (defn is-python-file? [file-object]
   (str/ends-with? (.getName file-object) ".py"))
@@ -26,12 +29,12 @@
     (when (.isDirectory directory-object)
       (let [all-files-and-folders (file-seq directory-object)
             python-files (filter is-python-file? all-files-and-folders)
-            file-paths (map (fn [f] (.getPath f)) python-files)]
+            file-paths (mapv (fn [f] (.getPath f)) python-files)]
 
         (if (empty? file-paths)
           (println "No Python files found in this directory.")
 
-          
+          ;; Single run benchmark logic
           (let [start-seq (System/nanoTime)
                 _ (process-directory-sequential file-paths)
                 end-seq (System/nanoTime)
@@ -42,21 +45,14 @@
                 end-par (System/nanoTime)
                 par-seconds (/ (- end-par start-par) 1e9)
                 speedup-factor (/ seq-seconds par-seconds)]
-            
+
             (println (str "Sequential Execution Time: " seq-seconds " seconds"))
             (println (str "Parallel Future Time:      " par-seconds " seconds"))
-            (println (str "Calculated Speedup:        " speedup-factor "x faster")) 
-          )
-        )
-      )
-    )
-  )
-)
+            (println (str "Calculated Speedup:        " speedup-factor "x faster"))))))))
 
 (defn -main [& arguments]
   (if (empty? arguments)
     (println "not good")
-
     (let [target-folder (first arguments)]
       (run-benchmarks target-folder))))
 
