@@ -1,7 +1,8 @@
 (ns parser
   (:require
     [lexer :as lex]
-    [clojure.string :as str]))
+    [clojure.string :as str])
+    )
 
 ;Identify number
 (defn number-node [value]
@@ -56,13 +57,11 @@
 
 ;Parse expression
 (defn parse-expression [tokens]
-
     (cond
 
     (= 1 (count tokens))
 
     (let [tok (first tokens)]
-
         (case (:type tok)
 
         :NUMBER
@@ -80,17 +79,16 @@
 
         nil))
 
-    (= 3 (count tokens))
+    (<= 3 (count tokens))
 
     (binary-node
         (:value (second tokens))
         (parse-expression [(first tokens)]
             )
-        (parse-expression [(nth tokens 2)]
+        (parse-expression (drop 2 tokens)
             )
         )
-    )
-)
+))
 
 ;Parse sqrt
 (defn parse-sqrt [tokens]
@@ -157,3 +155,4 @@
     (mapv parse-statement
         (lex/tokenize-file filename))
     )
+

@@ -1,5 +1,18 @@
-(defn eval-expression [expr env]
+(ns interpreter
+  (:require 
+    [parser :as par]
+    [lexer :as lex]
+    [clojure.string :as str]
+    )
+  )
 
+
+(defn pow-n [x n]
+   (reduce * (repeat n x))
+)
+
+(defn eval-expression [expr env]
+  
   (case (:type expr)
 
     :number
@@ -19,7 +32,15 @@
         "-" (- l r)
         "*" (* l r)
         "/" (/ l r)
-        "==" (= l r)))))
+        "==" (= l r)
+        "**" (pow-n l r)
+        ))
+
+    :string    
+    (:value expr)
+    
+  ))
+        
 
 (defn exec-assignment [node env]
 
@@ -38,7 +59,8 @@
   env)
 
 (defn execute-node [node env]
-
+  ;(println node)
+  ;(println env)
   (case (:type node)
 
     :assignment
@@ -47,12 +69,18 @@
     :print
     (exec-print node env)
 
-    env))
+    env)
+  
+)
 
-(defn run-program [ast]
-
+(defn run-program [filename]
   (reduce
     (fn [env node]
       (execute-node node env))
-    {}
-    ast))
+
+    {}  ;Set of variables
+    (par/parse-program filename) ;tokens
+  ))
+
+
+(run-program "Sample_Code.py")
