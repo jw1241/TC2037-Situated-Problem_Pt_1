@@ -1,5 +1,5 @@
 #lang racket
-
+(require racket/future)
 (provide
  token
  token-type
@@ -10,7 +10,8 @@
  tokenize_line
  classify
  indent-level
- read-file-lines)
+ read-file-lines
+ all_tokens-parallel)
 
 ; Read the txt file
 (define (read-file-lines filename)
@@ -149,6 +150,19 @@
      (tokenize_line line line-num))
    )
   )
+
+(define (all_tokens-parallel filename)
+  (define lines (read-file-lines filename))
+
+  (define tasks
+    (for/list ([line lines]
+               [line-num (in-naturals 1)])
+      (future
+       (lambda ()
+         (tokenize_line line line-num)))))
+
+  (filter pair?
+          (map touch tasks)))
 
 ;TESTING
 ;--------------------------

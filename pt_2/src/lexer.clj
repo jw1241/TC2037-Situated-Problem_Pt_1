@@ -111,3 +111,34 @@
     (remove empty?)
     )
   )
+  (defn chunks [n coll]
+  (when (seq coll)
+    (lazy-seq
+      (cons (take n coll)
+            (chunks n (drop n coll))))))
+
+(defn tokenize-file-parallel [filename]
+
+  (let [lines (vec (read-lines filename))
+
+        indexed
+        (map-indexed vector lines)
+
+        work
+        (chunks 1000 indexed)
+
+        futures
+        (map
+         (fn [chunk]
+           (future
+             (doall
+               (map
+                (fn [[idx line]]
+                  (tokenize-line line (inc idx)))
+                chunk))))
+         work)]
+
+    (->> futures
+         (mapcat deref)
+         (remove empty?))))
+

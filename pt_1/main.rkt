@@ -9,7 +9,8 @@
 ;Tokens from file with no syntax, lexicon, or semantic errors
 
 ;(displayln (all_tokens "Sample_Code.py"))
-
+;(time (all_tokens "Sample_Code.py"))
+(time (all_tokens-parallel "Sample_Code.py"))
 ;Tokens from file with no syntax, lexicon, or semantic errors
 
 ;(displayln (all_tokens "Sample_Bad.py"))
