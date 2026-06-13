@@ -14,7 +14,8 @@ h = "This is a string" # String
 l = [1,2,3,4] # List
 k = math.sqrt(4)
 
-print(b1)
+print(2 + 2 * 3)
+print(b1) 
 print(c)
 print(d)
 print(e)
@@ -33,3 +34,12 @@ j = 4
 while j > 0:
     j -= 1
     print(j)
+
+a = 3
+if a == 4:
+    print(a)
+elif a == 3:
+    print(a)
+else:
+    print(1)
+
